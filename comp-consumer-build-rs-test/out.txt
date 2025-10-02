@@ -1,0 +1,1 @@
+/home/ivan/testing/comp-consumer-build-rs-test/target/wasm32-wasip1/release/build/comp-consumer-build-rs-test-231c546ebbd77c0d/out

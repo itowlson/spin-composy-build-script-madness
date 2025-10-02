@@ -1,0 +1,22 @@
+#:schema https://schemas.spinframework.dev/spin/manifest-v2/latest.json
+
+spin_manifest_version = 2
+
+[application]
+name = "comp-consumer-build-rs-test"
+version = "0.1.0"
+authors = ["itowlson <ivan.towlson@fermyon.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "comp-consumer-build-rs-test"
+
+[component.comp-consumer-build-rs-test]
+source = "target/wasm32-wasip2/release/comp_consumer_build_rs_test.wasm"
+allowed_outbound_hosts = []
+[component.comp-consumer-build-rs-test.build]
+command = "cargo build --target wasm32-wasip2 --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+[component.comp-consumer-build-rs-test.dependencies]
+"useless:feature@0.0.1" = { path = "../yet-another-example-dep/target/wasm32-wasip2/release/yet_another_example_dep.wasm" }

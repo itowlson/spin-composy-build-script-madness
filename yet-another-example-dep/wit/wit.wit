@@ -1,0 +1,15 @@
+package useless:feature@0.0.1;
+
+interface the-useless-thing {
+    do-the-useless-thing: func();
+    do-another-but-equally-useless-thing: func();
+}
+
+interface argh {
+    do-argh: func();
+}
+
+world uselessness {
+    export the-useless-thing;
+    export argh;
+}
