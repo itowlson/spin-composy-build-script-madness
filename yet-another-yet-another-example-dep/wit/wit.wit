@@ -1,0 +1,14 @@
+package useful:thingy@0.0.1;
+
+interface this-is-terribly-exciting {
+    thrill-me: func();
+}
+
+interface this-is-also-terribly-exciting {
+    surprise-me: func(bubbles: s32) -> s32;
+}
+
+world uselessness {
+    export this-is-terribly-exciting;
+    export this-is-also-terribly-exciting;
+}

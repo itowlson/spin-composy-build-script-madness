@@ -13,12 +13,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let t: toml::Table = toml::from_str(&s).unwrap();
     let c = t.get("component").unwrap().get("comp-consumer-build-rs-test").unwrap();
     if let Some(deps) = c.get("dependencies").and_then(|d| d.as_table()) {
-        // TODO: currently only works for one-component-with-one-dep case
+        let dest_path = out_dir.join(format!("biscuits.rs"));
+
+        let mut macks = String::new();
+
         for (depname, dep) in deps {
             if let Some(deppath) = dep.get("path").and_then(|p| p.as_str()) {
                 println!("cargo::rerun-if-changed={deppath}");
 
-                let enc_wit_path = out_dir.join("custard.wasm");
+                let enc_wit_path = out_dir.join(format!("{}.wasm", safeify(depname)));
 
                 let mut wasm = read_wasm(deppath)?;
                 importize(&mut wasm, None, None)?;
@@ -26,12 +29,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 let itfs = extract_imports(wasm);
 
-                let dest_path = out_dir.join(format!("biscuits.rs"));
-                let mack = build_macro_call(&enc_wit_path, &itfs);
+                let ns = &itfs[0].0.namespace;
 
-                std::fs::write(&dest_path, mack).unwrap();
+                let mack = build_macro_call(&enc_wit_path, &itfs, ns);
+
+                macks = format!("{macks}\n{mack}");
             }
         }
+
+        std::fs::write(&dest_path, macks).unwrap();
     }
 
     Ok(())
@@ -115,21 +121,22 @@ fn emit_wasm(decoded: &DecodedWasm, dest: impl AsRef<Path>) -> anyhow::Result<()
     Ok(())
 }
 
-fn build_macro_call(wasm_path: impl AsRef<Path>, itfs: &[(wit_parser::PackageName, String)]) -> String {
+fn build_macro_call(wasm_path: impl AsRef<Path>, itfs: &[(wit_parser::PackageName, String)], ns: &str) -> String {
     let import_clauses = itfs.iter().map(|(p, i)| format!("import {};", qname(p, i))).collect::<Vec<_>>();
-    format!(r##"
-    spin_sdk::wit_bindgen::generate!({{
-        inline: r#"
-        package test:test;
-        world spork {{
-            {}
-        }}
-        "#,
-        path: "{}",
-        world: "test:test/spork",
-        generate_all
-    }});
-    "##, import_clauses.join("\n"), wasm_path.as_ref().display())
+    format!(r##"mod {ns}_dep {{
+spin_sdk::wit_bindgen::generate!({{
+    inline: r#"
+    package test:test-{ns};
+    world spork {{
+        {}
+    }}
+    "#,
+    path: "{}",
+    world: "test:test-{ns}/spork",
+    generate_all
+}});
+}}
+"##, import_clauses.join("\n"), wasm_path.as_ref().display())
 }
 
 fn qname(p: &wit_parser::PackageName, i: &str) -> String {
@@ -137,4 +144,8 @@ fn qname(p: &wit_parser::PackageName, i: &str) -> String {
         Some(v) => format!("{}:{}/{}@{}", p.namespace, p.name, i, v),
         None => format!("{}:{}/{}", p.namespace, p.name, i),
     }
+}
+
+fn safeify(depname: &str) -> String {
+    depname.replace("/", "_").replace("@", "_").replace(":", "_").replace(".", "_")
 }
