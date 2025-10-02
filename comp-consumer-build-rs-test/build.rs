@@ -133,6 +133,7 @@ spin_sdk::wit_bindgen::generate!({{
     "#,
     path: "{}",
     world: "test:test-{ns}/spork",
+    runtime_path: "::spin_sdk::wit_bindgen::rt",
     generate_all
 }});
 }}

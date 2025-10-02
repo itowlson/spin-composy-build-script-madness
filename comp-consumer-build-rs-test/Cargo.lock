@@ -116,7 +116,6 @@ dependencies = [
  "spin-sdk",
  "toml",
  "wasmparser 0.239.0",
- "wit-bindgen 0.43.0",
  "wit-component 0.239.0",
  "wit-parser 0.239.0",
 ]
