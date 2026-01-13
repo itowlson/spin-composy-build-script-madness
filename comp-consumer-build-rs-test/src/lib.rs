@@ -1,7 +1,9 @@
 use spin_sdk::http::{IntoResponse, Request, Response};
 use spin_sdk::http_component;
 
-include!(concat!(env!("OUT_DIR"), "/biscuits.rs"));
+use macka;
+
+macka::imports_for!("comp-consumer-build-rs-test");
 
 #[http_component]
 fn handle_comp_consumer_build_rs_test(_req: Request) -> anyhow::Result<impl IntoResponse> {

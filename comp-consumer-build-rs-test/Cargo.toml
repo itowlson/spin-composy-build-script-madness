@@ -11,7 +11,12 @@ crate-type = ["cdylib"]
 
 [dependencies]
 anyhow = "1"
+# proc-macro2 = "1.0.105"
+# quote = "1.0.43"
 spin-sdk = "5.0.0"
+# syn = "2.0.114"
+
+macka = { path = "../macka" }
 
 [build-dependencies]
 anyhow = "1"
