@@ -16,13 +16,4 @@ anyhow = "1"
 spin-sdk = "5.0.0"
 # syn = "2.0.114"
 
-macka = { path = "../macka" }
-
-[build-dependencies]
-anyhow = "1"
-toml = "0.8"
-wasmparser = "0.239.0"
-wit-component = "0.239.0"
-wit-parser = "0.239.0"
-
 [workspace]
