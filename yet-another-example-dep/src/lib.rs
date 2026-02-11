@@ -1,4 +1,6 @@
-wit_bindgen::generate!();
+wit_bindgen::generate!({
+    world: "uselessness",
+});
 
 struct Useless;
 
@@ -19,5 +21,12 @@ impl exports::useless::feature::argh::Guest for Useless {
         println!("argh!")
     }
 }
+
+// impl exports::useless::feature::hibble_bibble::Guest for Useless {
+//     #[allow(async_fn_in_trait)]
+//     fn hibble_and_indeed_bibble() -> () {
+//         println!("hibble and, indeed, bibble")
+//     }
+// }
 
 export!(Useless);

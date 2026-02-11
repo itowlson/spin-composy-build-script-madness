@@ -20,4 +20,5 @@ command = "cargo build --target wasm32-wasip2 --release"
 watch = ["src/**/*.rs", "Cargo.toml"]
 [component.comp-consumer-build-rs-test.dependencies]
 "useless:feature@0.0.1" = { path = "../yet-another-example-dep/target/wasm32-wasip2/release/yet_another_example_dep.wasm" }
-"useful:thingy@0.0.1" = { path = "../yet-another-yet-another-example-dep/target/wasm32-wasip2/release/yet_another_yet_another_example_dep.wasm" }
+"useful:thingy-dingy/exciteville@0.0.1" = { path = "../yet-another-yet-another-example-dep/target/wasm32-wasip2/release/yet_another_yet_another_example_dep.wasm", export = "useful:thingy/this-is-terribly-exciting@0.0.1" }
+# "useful:thingy/this-is-terribly-exciting@0.0.1" = { path = "../yet-another-yet-another-example-dep/target/wasm32-wasip2/release/yet_another_yet_another_example_dep.wasm" }

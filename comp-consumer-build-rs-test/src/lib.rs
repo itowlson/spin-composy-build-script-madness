@@ -1,10 +1,6 @@
 use spin_sdk::http::{IntoResponse, Request, Response};
 use spin_sdk::http_component;
 
-// use macka;
-
-// macka::imports_for!("comp-consumer-build-rs-test");
-
 spin_sdk::wit_bindgen::generate!({
     path: "./spin-dependencies.wit",
     world: "root",
@@ -17,8 +13,8 @@ fn handle_comp_consumer_build_rs_test(_req: Request) -> anyhow::Result<impl Into
     useless::feature::the_useless_thing::do_the_useless_thing();
     useless::feature::argh::do_argh();
 
-    useful::thingy::this_is_terribly_exciting::thrill_me();
-    println!("1 + 1 = {}", useful::thingy::this_is_also_terribly_exciting::surprise_me(1));
+    useful::thingy_dingy::exciteville::thrill_me();
+    // println!("1 + 1 = {}", useful::thingy::this_is_also_terribly_exciting::surprise_me(1));
     
     Ok(Response::builder()
         .status(200)

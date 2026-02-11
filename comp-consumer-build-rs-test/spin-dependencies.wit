@@ -1,12 +1,13 @@
 package root:component;
 
 world root {
+  import useless:feature/hibble-bibble@0.0.1;
   import useless:feature/the-useless-thing@0.0.1;
   import useless:feature/argh@0.0.1;
-  import useful:thingy/this-is-terribly-exciting@0.0.1;
-  import useful:thingy/this-is-also-terribly-exciting@0.0.1;
+  import useful:thingy-dingy/exciteville@0.0.1;
 }
 world impo-world0 {
+  import useless:feature/hibble-bibble@0.0.1;
   import useless:feature/the-useless-thing@0.0.1;
   import useless:feature/argh@0.0.1;
 }
@@ -153,6 +154,9 @@ package wasi:filesystem@0.2.3 {
   }
 }
 package useless:feature@0.0.1 {
+  interface hibble-bibble {
+    hibble-and-indeed-bibble: func();
+  }
   interface the-useless-thing {
     do-the-useless-thing: func();
 
@@ -168,5 +172,10 @@ package useful:thingy@0.0.1 {
   }
   interface this-is-also-terribly-exciting {
     surprise-me: func(bubbles: s32) -> s32;
+  }
+}
+package useful:thingy-dingy@0.0.1 {
+  interface exciteville {
+    thrill-me: func();
   }
 }

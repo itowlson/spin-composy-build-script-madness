@@ -9,7 +9,16 @@ interface argh {
     do-argh: func();
 }
 
+interface hibble-bibble {
+    hibble-and-indeed-bibble: func();
+}
+
 world uselessness {
     export the-useless-thing;
     export argh;
 }
+
+//world bibbling-uselessness {
+//    include uselessness;
+//    export hibble-bibble;
+//}
